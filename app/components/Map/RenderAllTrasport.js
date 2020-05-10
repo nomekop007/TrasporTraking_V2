@@ -73,6 +73,9 @@ export default function renderMarkers() {
     <View>
       {listMarkers.map((trasport) => (
         <Marker
+          onPress={(e) => {
+            inforTrasport(e.nativeEvent.id);
+          }}
           identifier={trasport.val().idTrasporte}
           key={trasport.val().idTrasporte}
           coordinate={{
@@ -81,9 +84,7 @@ export default function renderMarkers() {
           }}
           title={Trasport.lineaTrasporte}
           description={Trasport.Patente}
-          onPress={(e) => {
-            inforTrasport(e.nativeEvent.id);
-          }}
+          icon={require("../../../assets/img/icono.png")}
         />
       ))}
     </View>
