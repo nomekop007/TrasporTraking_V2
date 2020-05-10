@@ -9,30 +9,29 @@ const db = firebase.database(firebaseapp).ref("/Coordenada/");
 export default function renderMarkers() {
   const [listMarkers, setListMarkers] = useState([]);
 
-  console.log(listMarkers);
-
-  /* cargar lista de trasportes de database */
-  useEffect(() => {
-    const resultTrasports = [];
-    db.on("value", (snapshot) => {
-      snapshot.forEach((doc) => {
-        resultTrasports.push(doc);
-      });
-      setListMarkers(resultTrasports);
+  /* extrae lso trasportes de la base de datos */
+  const resultTrasports = [];
+  db.once("value", (snapshot) => {
+    snapshot.forEach((doc) => {
+      resultTrasports.push(doc);
     });
-  }, []);
+    setListMarkers(resultTrasports);
+  }).catch((Response) => {
+    console.log("error consulta");
+  });
 
   return (
     /* devuelve lista de markers */
     <View>
-      {listMarkers.map((trasport, index) => (
+      {listMarkers.map((trasport) => (
         <Marker
-          key={index}
+          key={trasport.val().idTrasporte}
           coordinate={{
             latitude: trasport.val().latitud,
             longitude: trasport.val().longitud,
           }}
           title={trasport.val().idTrasporte}
+          description="estos es un trasporte publico"
         />
       ))}
     </View>
