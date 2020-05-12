@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
-import { Marker } from "react-native-maps";
+import { Marker, Callout } from "react-native-maps";
 import { firebaseapp } from "../../utils/Firebase";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -10,11 +10,6 @@ const firestore = firebase.firestore(firebaseapp);
 
 export default function renderMarkers() {
   const [listMarkers, setListMarkers] = useState([]);
-  const [Trasport, setTrasport] = useState({
-    Patente: "cargando...",
-    idTrasporte: "CVIGE8xKkLUy5Zkfy4vkLqOOKXb2",
-    lineaTrasporte: "cargando...",
-  });
 
   /* extrae las coordenadsa de la base de datos */
   const resultTrasports = [];
@@ -30,8 +25,44 @@ export default function renderMarkers() {
       console.log("error de extraccion : ", error);
     });
 
-  /* extrae el trasporte seleccionado en la base de datos*/
-  const inforTrasport = (id) => {
+  return (
+    /* devuelve lista de markers */
+    <View>
+      {listMarkers.map((trasport) => (
+        <Marker
+          identifier={trasport.val().idTrasporte}
+          key={trasport.val().idTrasporte}
+          coordinate={{
+            latitude: trasport.val().latitud,
+            longitude: trasport.val().longitud,
+          }}
+          icon={require("../../../assets/img/icono.png")}
+        >
+          <Callout
+            tooltip={false}
+            onPress={() => {
+              console.log(
+                "funcion para dar mas informacion de :",
+                trasport.val().idTrasporte
+              );
+            }}
+          >
+            <LoadingInfoTrasport id={trasport.val().idTrasporte} />
+          </Callout>
+        </Marker>
+      ))}
+    </View>
+  );
+}
+
+function LoadingInfoTrasport(props) {
+  const { id } = props;
+  const [Trasport, setTrasport] = useState({
+    Patente: "cargando...",
+    lineaTrasporte: "cargando...",
+  });
+
+  useEffect(() => {
     firestore
       .collection("Transporte")
       .doc(id)
@@ -66,27 +97,12 @@ export default function renderMarkers() {
       .catch(function (error) {
         console.log("error de extraccion :", error);
       });
-  };
+  }, []);
 
   return (
-    /* devuelve lista de markers */
     <View>
-      {listMarkers.map((trasport) => (
-        <Marker
-          onPress={(e) => {
-            inforTrasport(e.nativeEvent.id);
-          }}
-          identifier={trasport.val().idTrasporte}
-          key={trasport.val().idTrasporte}
-          coordinate={{
-            latitude: trasport.val().latitud,
-            longitude: trasport.val().longitud,
-          }}
-          title={Trasport.lineaTrasporte}
-          description={Trasport.Patente}
-          icon={require("../../../assets/img/icono.png")}
-        />
-      ))}
+      <Text style={{ textAlign: "center" }}>{Trasport.lineaTrasporte}</Text>
+      <Text>Patente :{Trasport.Patente}</Text>
     </View>
   );
 }
