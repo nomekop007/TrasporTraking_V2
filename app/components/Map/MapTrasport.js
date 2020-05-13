@@ -7,10 +7,25 @@ import { useEffect, useRef, useState } from "react";
 import * as Permissions from "expo-permissions";
 import Toast from "react-native-easy-toast";
 import RenderAllTrasport from "../Map/RenderAllTrasport";
+import firebase from "firebase";
 
 export default function MapTrasport() {
   const toastRef = useRef();
   const [location, setlocation] = useState(null);
+  const [UserLogged, setUserLogged] = useState(false);
+  /* validar si el usuario esta logeado  no */
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      user ? setUserLogged(true) : setUserLogged(false);
+    });
+  }, []);
+
+  const [Region, setRegion] = useState({
+    latitude: -35.423244,
+    longitude: -71.648483,
+    latitudeDelta: 0.031,
+    longitudeDelta: 0.031,
+  });
 
   /* pedir permisos de ubicacion */
   useEffect(() => {
@@ -43,8 +58,12 @@ export default function MapTrasport() {
       toastRef.current.show("El GPS esta desactivado!", 2000);
     } else {
       const { latitude, longitude } = props;
-      console.log(props);
-      toastRef.current.show("funcion aun no disponible!", 2000);
+      setRegion({
+        latitude: latitude,
+        longitude: longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      });
     }
   };
 
@@ -54,19 +73,14 @@ export default function MapTrasport() {
         style={{ height: "100%", width: "100%" }}
         mapType="standard"
         provider="google"
-        initialRegion={{
-          latitude: -35.423244,
-          longitude: -71.648483,
-          latitudeDelta: 0.031,
-          longitudeDelta: 0.031,
-        }}
+        region={Region}
         showsUserLocation={true}
         showsMyLocationButton={false}
         followsUserLocation={true}
         zoomControlEnabled={false}
         loadingEnabled={true}
       >
-        <RenderAllTrasport />
+        <RenderAllTrasport UserLogged={UserLogged} toastRef={toastRef} />
       </MapView>
       <Icon
         reverse

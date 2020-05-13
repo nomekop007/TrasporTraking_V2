@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Marker, Callout } from "react-native-maps";
+
 import { firebaseapp } from "../../utils/Firebase";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -8,7 +9,8 @@ import "firebase/firestore";
 const database = firebase.database(firebaseapp);
 const firestore = firebase.firestore(firebaseapp);
 
-export default function renderMarkers() {
+export default function renderMarkers(props) {
+  const { UserLogged, toastRef } = props;
   const [listMarkers, setListMarkers] = useState([]);
 
   /* extrae las coordenadsa de la base de datos */
@@ -30,7 +32,6 @@ export default function renderMarkers() {
     <View>
       {listMarkers.map((trasport) => (
         <Marker
-          identifier={trasport.val().idTrasporte}
           key={trasport.val().idTrasporte}
           coordinate={{
             latitude: trasport.val().latitud,
@@ -39,15 +40,16 @@ export default function renderMarkers() {
           icon={require("../../../assets/img/icono.png")}
         >
           <Callout
-            tooltip={false}
             onPress={() => {
-              console.log(
-                "funcion para dar mas informacion de :",
-                trasport.val().idTrasporte
-              );
+              UserLogged
+                ? console.log("redireccionar a modal informacion")
+                : toastRef.current.show(
+                    "Para mas informacion debe iniciar Sesion",
+                    3000
+                  );
             }}
           >
-            <LoadingInfoTrasport id={trasport.val().idTrasporte} />
+            <LoadingInfoTrasport ID={trasport.val().idTrasporte} />
           </Callout>
         </Marker>
       ))}
@@ -55,17 +57,18 @@ export default function renderMarkers() {
   );
 }
 
+/* buscar la informacion de trasporte a traves de su ID */
 function LoadingInfoTrasport(props) {
-  const { id } = props;
+  const { ID } = props;
   const [Trasport, setTrasport] = useState({
-    Patente: "cargando...",
-    lineaTrasporte: "cargando...",
+    Patente: "Cargando..",
+    lineaTrasporte: "Cargando..",
   });
 
   useEffect(() => {
     firestore
       .collection("Transporte")
-      .doc(id)
+      .doc(ID)
       .get()
       .then((doc) => {
         const data = doc.data();
@@ -101,8 +104,15 @@ function LoadingInfoTrasport(props) {
 
   return (
     <View>
-      <Text style={{ textAlign: "center" }}>{Trasport.lineaTrasporte}</Text>
-      <Text>Patente :{Trasport.Patente}</Text>
+      <Text style={MyStyles.titleLinea}>{Trasport.lineaTrasporte}</Text>
+      <Text style={{ textAlign: "center" }}>Patente :{Trasport.Patente}</Text>
     </View>
   );
 }
+
+const MyStyles = StyleSheet.create({
+  titleLinea: {
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+});
