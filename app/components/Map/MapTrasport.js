@@ -11,21 +11,18 @@ import firebase from "firebase";
 
 export default function MapTrasport() {
   const toastRef = useRef();
+  const [mapView, setmapView] = useState({});
   const [location, setlocation] = useState(null);
   const [UserLogged, setUserLogged] = useState(false);
+
+  console.log(location);
+
   /* validar si el usuario esta logeado  no */
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       user ? setUserLogged(true) : setUserLogged(false);
     });
   }, []);
-
-  const [Region, setRegion] = useState({
-    latitude: -35.423244,
-    longitude: -71.648483,
-    latitudeDelta: 0.031,
-    longitudeDelta: 0.031,
-  });
 
   /* pedir permisos de ubicacion */
   useEffect(() => {
@@ -58,22 +55,46 @@ export default function MapTrasport() {
       toastRef.current.show("El GPS esta desactivado!", 2000);
     } else {
       const { latitude, longitude } = props;
-      setRegion({
-        latitude: latitude,
-        longitude: longitude,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
-      });
+
+      mapView.animateCamera(
+        {
+          center: {
+            latitude: latitude,
+            longitude: longitude,
+          },
+          pitch: 0,
+          heading: 0,
+          zoom: 17,
+          altitude: 1000,
+        },
+        2000
+      );
     }
   };
 
   return (
     <View>
       <MapView
+        ref={(mapView) => {
+          setmapView(mapView);
+        }}
         style={{ height: "100%", width: "100%" }}
         mapType="standard"
         provider="google"
-        region={Region}
+        initialRegion={{
+          latitude: -35.423244,
+          longitude: -71.648483,
+          latitudeDelta: 0.031,
+          longitudeDelta: 0.031,
+        }}
+        onUserLocationChange={(location) => {
+          setlocation({
+            latitude: location.nativeEvent.coordinate.latitude,
+            longitude: location.nativeEvent.coordinate.longitude,
+            latitudeDelta: 0.011,
+            longitudeDelta: 0.011,
+          });
+        }}
         showsUserLocation={true}
         showsMyLocationButton={false}
         followsUserLocation={true}
