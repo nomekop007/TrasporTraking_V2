@@ -14,14 +14,15 @@ export default function renderMarkers(props) {
   const [listMarkers, setListMarkers] = useState([]);
 
   /* extrae las coordenadsa de la base de datos */
-  const resultTrasports = [];
+  const resultCoordinateTrasport = [];
   database
     .ref("/Coordenada/")
     .once("value", (snapshot) => {
+      /* recorre la lista de coordenadas */
       snapshot.forEach((doc) => {
-        resultTrasports.push(doc);
+        resultCoordinateTrasport.push(doc);
       });
-      setListMarkers(resultTrasports);
+      setListMarkers(resultCoordinateTrasport);
     })
     .catch((error) => {
       console.log("error de extraccion : ", error);
@@ -30,12 +31,12 @@ export default function renderMarkers(props) {
   return (
     /* devuelve lista de markers */
     <View>
-      {listMarkers.map((trasport) => (
+      {listMarkers.map((coordenada) => (
         <Marker
-          key={trasport.val().idTrasporte}
+          key={coordenada.val().idTrasporte}
           coordinate={{
-            latitude: trasport.val().latitud,
-            longitude: trasport.val().longitud,
+            latitude: coordenada.val().latitud,
+            longitude: coordenada.val().longitud,
           }}
           icon={require("../../../assets/img/icono.png")}
         >
@@ -49,7 +50,7 @@ export default function renderMarkers(props) {
                   );
             }}
           >
-            <LoadingInfoTrasport ID={trasport.val().idTrasporte} />
+            <LoadingInfoTrasport ID={coordenada.val().idTrasporte} />
           </Callout>
         </Marker>
       ))}

@@ -15,8 +15,6 @@ export default function MapTrasport() {
   const [location, setlocation] = useState(null);
   const [UserLogged, setUserLogged] = useState(false);
 
-  console.log(location);
-
   /* validar si el usuario esta logeado  no */
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
