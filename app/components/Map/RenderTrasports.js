@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Marker, Callout } from "react-native-maps";
-
 import { firebaseapp } from "../../utils/Firebase";
 import firebase from "firebase/app";
 import "firebase/database";
