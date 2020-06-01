@@ -1,13 +1,13 @@
 import { createStackNavigator } from "react-navigation-stack";
-import MapScreen from "../screens/Map";
+import MapScreen from "../screens/Map/Map";
 
 const MapScreenStacks = createStackNavigator({
   Map: {
     screen: MapScreen,
     navigationOptions: () => ({
-      title: "Mapa de Busqueda"
-    })
-  }
+      title: "Mapa de Busqueda",
+    }),
+  },
 });
 
 export default MapScreenStacks;

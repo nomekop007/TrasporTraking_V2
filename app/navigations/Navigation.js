@@ -4,7 +4,7 @@ import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
 //importando los Stacks osea las ventanas al navegationStacks
-import TrasportsScreenStack from "./TrasportsStacks";
+import LineTrasportsScreenStack from "./LineTrasportsStacks";
 import FavoriteScreenStacks from "./FavoriteStacks";
 import MapScreenStacks from "./MapStacks";
 import AccountScreenStacks from "./AccountStacks";
@@ -12,10 +12,10 @@ import AccountScreenStacks from "./AccountStacks";
 //se rellena el navigationStack con las ventanas
 const NavigationStacks = createBottomTabNavigator(
   {
-    Trasports: {
-      screen: TrasportsScreenStack,
+    LineTrasports: {
+      screen: LineTrasportsScreenStack,
       navigationOptions: () => ({
-        tabBarLabel: "trasportes",
+        tabBarLabel: "Lineas",
         tabBarIcon: ({ tintColor }) => (
           <Icon
             type="material-community"
@@ -23,8 +23,8 @@ const NavigationStacks = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        )
-      })
+        ),
+      }),
     },
     Favorite: {
       screen: FavoriteScreenStacks,
@@ -37,8 +37,8 @@ const NavigationStacks = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        )
-      })
+        ),
+      }),
     },
     Map: {
       screen: MapScreenStacks,
@@ -51,8 +51,8 @@ const NavigationStacks = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        )
-      })
+        ),
+      }),
     },
     Account: {
       screen: AccountScreenStacks,
@@ -65,18 +65,18 @@ const NavigationStacks = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        )
-      })
-    }
+        ),
+      }),
+    },
   },
   // configurar movilidad Tab
   {
     initialRouteName: "Account", //donde inica el tab
-    order: ["Trasports", "Favorite", "Map", "Account"], //orden de tabs
+    order: ["LineTrasports", "Favorite", "Map", "Account"], //orden de tabs
     tabBarOptions: {
       inactiveTintColor: "#646464", //color tabs inactivos
-      activeTintColor: "#EF0B0B" // color tab activo
-    }
+      activeTintColor: "#EF0B0B", // color tab activo
+    },
   }
 );
 

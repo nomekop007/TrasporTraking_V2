@@ -5,7 +5,7 @@ import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Toast from "react-native-easy-toast";
-import RenderTrasports from "../components/Map/RenderTrasports";
+import RenderTrasports from "../../components/Map/RenderTrasports";
 import firebase from "firebase";
 
 export default function Map() {
@@ -83,14 +83,6 @@ export default function Map() {
           longitude: -71.648483,
           latitudeDelta: 0.031,
           longitudeDelta: 0.031,
-        }}
-        onUserLocationChange={(location) => {
-          setlocation({
-            latitude: location.nativeEvent.coordinate.latitude,
-            longitude: location.nativeEvent.coordinate.longitude,
-            latitudeDelta: 0.011,
-            longitudeDelta: 0.011,
-          });
         }}
         showsUserLocation={true}
         showsMyLocationButton={false}

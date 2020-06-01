@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Marker, Callout } from "react-native-maps";
-import { firebaseapp } from "../../utils/Firebase";
-import firebase from "firebase/app";
-import "firebase/database";
-const database = firebase.database(firebaseapp);
 import { Transporte } from "../../model/Transporte";
+import { Coordenada } from "../../model/Coordenada";
 const trasporte = new Transporte();
+const coordenada = new Coordenada();
 
-export default function renderMarkers(props) {
+export default function RenderTrasports(props) {
   const { UserLogged, toastRef } = props;
   const [listMarkers, setListMarkers] = useState([]);
 
-  /* extrae las coordenadsa de la base de datos */
-  const resultCoordinateTrasport = [];
-  database
-    .ref("/Coordenada/")
-    .once("value", (snapshot) => {
-      /* recorre la lista de coordenadas */
-      snapshot.forEach((doc) => {
-        resultCoordinateTrasport.push(doc);
-      });
-      setListMarkers(resultCoordinateTrasport);
-    })
-    .catch((error) => {
-      console.log("error de extraccion : ", error);
+  const promise = coordenada.buscarTodasLasCoordenadas();
+  promise.then((coordinates) => {
+    const resultCoordinateTrasport = [];
+    coordinates.forEach((doc) => {
+      resultCoordinateTrasport.push(doc);
     });
+    setListMarkers(resultCoordinateTrasport);
+  });
 
   return (
     /* devuelve lista de markers */

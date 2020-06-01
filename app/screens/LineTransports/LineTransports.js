@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-export default function Trasports() {
+export default function LineTransports() {
   return (
     <View>
-      <Text>Estamos en la lista de Trasportes</Text>
+      <Text>Estamos en la lista de lineas de transportes</Text>
     </View>
   );
 }

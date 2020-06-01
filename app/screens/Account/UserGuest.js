@@ -9,7 +9,7 @@ function UserGuest(props) {
   return (
     <ScrollView style={styles.viewBody} centerContent={true}>
       <Image
-        source={require("../../../assets/img/original.jpg")}
+        source={require("../../../assets/img/original.png")}
         style={styles.image}
         resizeMode="contain"
       />
@@ -17,7 +17,7 @@ function UserGuest(props) {
       <Text style={styles.description}>
         ¿ necesita ayuda para ubicar los trasportes publicos? Busca, visualiza y
         sigue los trasportes que se movilizan por toda la region !Registrate
-        para ayudarnos a mejorar el trasporte publico.
+        para ayudarnos a mejorar tu experiecia.
       </Text>
       <View style={styles.viewBtn}>
         <Button

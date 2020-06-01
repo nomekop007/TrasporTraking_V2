@@ -1,13 +1,13 @@
 import { createStackNavigator } from "react-navigation-stack";
-import TrasportsScreen from "../screens/Trasports";
+import LineTransportsScreen from "../screens/LineTransports/LineTransports";
 
 const TrasportsScreenStack = createStackNavigator({
-  Trasports: {
-    screen: TrasportsScreen,
+  LineTrasports: {
+    screen: LineTransportsScreen,
     navigationOptions: () => ({
-      title: "Lista de trasportes"
-    })
-  }
+      title: "Lista de Lineas de trasporte",
+    }),
+  },
 });
 
 export default TrasportsScreenStack;

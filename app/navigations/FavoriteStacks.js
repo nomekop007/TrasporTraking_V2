@@ -1,13 +1,13 @@
 import { createStackNavigator } from "react-navigation-stack";
-import FavoriteScreen from "../screens/Favorite";
+import FavoriteScreen from "../screens/Favorite/Favorite";
 
 const FavoriteScreenStacks = createStackNavigator({
   Favorite: {
     screen: FavoriteScreen,
     navigationOptions: () => ({
-      title: "Mis Trasportes Favoritos"
-    })
-  }
+      title: "Mis Trasportes Favoritos",
+    }),
+  },
 });
 
 export default FavoriteScreenStacks;
