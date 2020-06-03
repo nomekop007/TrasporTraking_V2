@@ -11,13 +11,19 @@ export default function RenderTrasports(props) {
   const [listMarkers, setListMarkers] = useState([]);
 
   const promise = coordenada.buscarTodasLasCoordenadas();
-  promise.then((coordinates) => {
-    const resultCoordinateTrasport = [];
-    coordinates.forEach((doc) => {
-      resultCoordinateTrasport.push(doc);
+
+  /* extrae las coordenadas que bienen en la promise */
+  promise
+    .then((coordinates) => {
+      const resultCoordinateTrasport = [];
+      coordinates.forEach((doc) => {
+        resultCoordinateTrasport.push(doc);
+      });
+      setListMarkers(resultCoordinateTrasport);
+    })
+    .catch((error) => {
+      console.log("error de extraccion : ", error);
     });
-    setListMarkers(resultCoordinateTrasport);
-  });
 
   return (
     /* devuelve lista de markers */
@@ -59,9 +65,13 @@ function LoadingInfoTrasport(props) {
 
   useEffect(() => {
     const promesa = trasporte.buscarTransporte(ID);
-    promesa.then((trasporte) => {
-      setTrasport(trasporte);
-    });
+    promesa
+      .then((trasporte) => {
+        setTrasport(trasporte);
+      })
+      .catch((error) => {
+        console.log("error de extraccion : ", error);
+      });
   }, []);
 
   return (

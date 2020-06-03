@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import * as firebase from "firebase";
 
 import Loading from "../../components/Loading";
 import UserGuest from "./UserGuest";
 import UserLogged from "./UserLogged";
+import * as firebase from "firebase";
+import { firebaseapp } from "../../utils/Firebase";
+import "firebase/firestore";
+/* llamando la base de datos firestone */
+const db = firebase.firestore(firebaseapp);
 
 export default function MyAccount() {
   const [login, setLogin] = useState(null);
@@ -11,7 +15,20 @@ export default function MyAccount() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       //pregunta  si user es null o false
-      !user ? setLogin(false) : setLogin(true);
+      if (user === null) {
+        setLogin(false);
+      } else {
+        setLogin(true);
+        db.collection("Usuario")
+          .doc(user.uid)
+          .set({
+            idUsuario: user.uid,
+            correoElectronico: user.email,
+          })
+          .then((error) => {
+            console.log("Error writing document: ", error);
+          });
+      }
     });
   }, []);
 
