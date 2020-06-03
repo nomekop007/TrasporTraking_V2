@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import Loading from "../../components/Loading";
 import UserGuest from "./UserGuest";
 import UserLogged from "./UserLogged";
@@ -24,6 +23,7 @@ export default function MyAccount() {
           .set({
             idUsuario: user.uid,
             correoElectronico: user.email,
+            nombreUsuario: user.displayName ? user.displayName : "Anónimo",
           })
           .then((error) => {
             console.log("Error writing document: ", error);
