@@ -18,41 +18,26 @@ export class Transporte {
   }
 
   buscarTransporte(idTransporte) {
-    let promesa = Promise.resolve(
-      firestore
-        .collection("Transporte")
-        .doc(idTransporte)
-        .get()
-        .then((doc) => {
-          const data = doc.data();
-          /* se cambia nombre de linea de trasporte */
-          switch (data.lineaTrasporte) {
-            case "l1":
-              data.lineaTrasporte = "linea A";
-              break;
-            case "l2":
-              data.lineaTrasporte = "linea B";
-              break;
-            case "l3":
-              data.lineaTrasporte = "linea C";
-              break;
-            case "l4":
-              data.lineaTrasporte = "linea D";
-              break;
-            case "l5":
-              data.lineaTrasporte = "linea Colin";
-              break;
+    let promesa = firestore
+      .collection("Transporte")
+      .doc(idTransporte)
+      .get()
+      .then((doc) => {
+        const transporte = doc.data();
 
-            default:
-              data.lineaTrasporte = "linea desconocida";
-              break;
-          }
-          return data;
-        })
-        .catch(function (error) {
-          console.log("error de extraccion :", error);
-        })
-    );
+        return firestore
+          .collection("LineaTrasporte")
+          .doc(transporte.lineaTrasporte)
+          .get()
+          .then((doc) => {
+            /* cambio del idlinea por nombre de la linea */
+            transporte.lineaTrasporte = doc.data().nombreLinea;
+            return transporte;
+          });
+      })
+      .catch(function (error) {
+        console.log("error de extraccion :", error);
+      });
 
     return promesa;
   }

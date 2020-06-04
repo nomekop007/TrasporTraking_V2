@@ -13,7 +13,6 @@ export default function MyAccount() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      //pregunta  si user es null o false
       if (user === null) {
         setLogin(false);
       } else {
@@ -24,9 +23,6 @@ export default function MyAccount() {
             idUsuario: user.uid,
             correoElectronico: user.email,
             nombreUsuario: user.displayName ? user.displayName : "Anónimo",
-          })
-          .then((error) => {
-            console.log("Error writing document: ", error);
           });
       }
     });
