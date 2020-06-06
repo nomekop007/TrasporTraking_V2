@@ -3,20 +3,20 @@ import { View, Text, StyleSheet } from "react-native";
 import { Marker, Callout } from "react-native-maps";
 import { Transporte } from "../../model/Transporte";
 import { Coordenada } from "../../model/Coordenada";
-const trasporte = new Transporte();
-const coordenada = new Coordenada();
+const trasport = new Transporte();
+const coordinate = new Coordenada();
 
 export default function RenderTrasports(props) {
   const { UserLogged, toastRef } = props;
   const [listMarkers, setListMarkers] = useState([]);
 
-  const promise = coordenada.buscarTodasLasCoordenadas();
+  const promise = coordinate.buscarTodasLasCoordenadas();
 
   /* extrae las coordenadas que bienen en la promise */
   promise
-    .then((coordinates) => {
+    .then((coordinats) => {
       const resultCoordinateTrasport = [];
-      coordinates.forEach((doc) => {
+      coordinats.forEach((doc) => {
         resultCoordinateTrasport.push(doc);
       });
       setListMarkers(resultCoordinateTrasport);
@@ -28,12 +28,12 @@ export default function RenderTrasports(props) {
   return (
     /* devuelve lista de markers */
     <View>
-      {listMarkers.map((coordenada) => (
+      {listMarkers.map((coordinate) => (
         <Marker
-          key={coordenada.val().idTrasporte}
+          key={coordinate.val().idTransporte}
           coordinate={{
-            latitude: coordenada.val().latitud,
-            longitude: coordenada.val().longitud,
+            latitude: coordinate.val().latitud,
+            longitude: coordinate.val().longitud,
           }}
           icon={require("../../../assets/img/icono.png")}
         >
@@ -47,7 +47,7 @@ export default function RenderTrasports(props) {
                   );
             }}
           >
-            <LoadingInfoTrasport ID={coordenada.val().idTrasporte} />
+            <LoadingInfoTrasport ID={coordinate.val().idTransporte} />
           </Callout>
         </Marker>
       ))}
@@ -58,16 +58,16 @@ export default function RenderTrasports(props) {
 /* buscar la informacion de trasporte a traves de su ID */
 function LoadingInfoTrasport(props) {
   const { ID } = props;
-  const [Trasport, setTrasport] = useState({
-    Patente: "Cargando..",
-    lineaTrasporte: "Cargando..",
+  const [Transport, setTransport] = useState({
+    patente: "Cargando..",
+    lineaTransporte: "Cargando..",
   });
 
   useEffect(() => {
-    const promesa = trasporte.buscarTransporte(ID);
-    promesa
-      .then((trasporte) => {
-        setTrasport(trasporte);
+    const promise = trasport.buscarTransporte(ID);
+    promise
+      .then((trasportInfo) => {
+        setTransport(trasportInfo);
       })
       .catch((error) => {
         console.log("error de extraccion : ", error);
@@ -76,8 +76,8 @@ function LoadingInfoTrasport(props) {
 
   return (
     <View>
-      <Text style={MyStyles.titleLinea}>{Trasport.lineaTrasporte}</Text>
-      <Text style={{ textAlign: "center" }}>Patente :{Trasport.Patente}</Text>
+      <Text style={MyStyles.titleLinea}>{Transport.lineaTransporte}</Text>
+      <Text style={{ textAlign: "center" }}>Patente :{Transport.patente}</Text>
     </View>
   );
 }

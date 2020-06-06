@@ -14,14 +14,13 @@ export class Coordenada {
   }
 
   buscarTodasLasCoordenadas() {
-    var misDatos = Promise.resolve(
-      database
-        .ref("/Coordenada/")
-        .once("value")
-        .catch((error) => {
-          console.log("error de extraccion : ", error);
-        })
-    );
-    return misDatos;
+    let promise = database
+      .ref("/Coordenada/")
+      .once("value")
+      .catch((error) => {
+        console.log("error de extraccion : ", error);
+      });
+
+    return promise;
   }
 }

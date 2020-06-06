@@ -18,7 +18,7 @@ export class Transporte {
   }
 
   buscarTransporte(idTransporte) {
-    let promesa = firestore
+    let promise = firestore
       .collection("Transporte")
       .doc(idTransporte)
       .get()
@@ -26,12 +26,12 @@ export class Transporte {
         const transporte = doc.data();
 
         return firestore
-          .collection("LineaTrasporte")
-          .doc(transporte.lineaTrasporte)
+          .collection("LineaTransporte")
+          .doc(transporte.lineaTransporte)
           .get()
           .then((doc) => {
             /* cambio del idlinea por nombre de la linea */
-            transporte.lineaTrasporte = doc.data().nombreLinea;
+            transporte.lineaTransporte = doc.data().nombreLinea;
             return transporte;
           });
       })
@@ -39,6 +39,6 @@ export class Transporte {
         console.log("error de extraccion :", error);
       });
 
-    return promesa;
+    return promise;
   }
 }
