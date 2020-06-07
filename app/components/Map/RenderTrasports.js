@@ -13,17 +13,13 @@ export default function RenderTrasports(props) {
   const promise = coordinate.buscarTodasLasCoordenadas();
 
   /* extrae las coordenadas que bienen en la promise */
-  promise
-    .then((coordinats) => {
-      const resultCoordinateTrasport = [];
-      coordinats.forEach((doc) => {
-        resultCoordinateTrasport.push(doc);
-      });
-      setListMarkers(resultCoordinateTrasport);
-    })
-    .catch((error) => {
-      console.log("error de extraccion : ", error);
+  promise.then((coordinats) => {
+    const resultCoordinateTrasport = [];
+    coordinats.forEach((doc) => {
+      resultCoordinateTrasport.push(doc);
     });
+    setListMarkers(resultCoordinateTrasport);
+  });
 
   return (
     /* devuelve lista de markers */
@@ -65,13 +61,9 @@ function LoadingInfoTrasport(props) {
 
   useEffect(() => {
     const promise = trasport.buscarTransporte(ID);
-    promise
-      .then((trasportInfo) => {
-        setTransport(trasportInfo);
-      })
-      .catch((error) => {
-        console.log("error de extraccion : ", error);
-      });
+    promise.then((trasportInfo) => {
+      setTransport(trasportInfo);
+    });
   }, []);
 
   return (
