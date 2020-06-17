@@ -1,18 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
-import MapView from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Toast from "react-native-easy-toast";
 import RenderTrasports from "../../components/Map/RenderTrasports";
 import firebase from "firebase";
+import { LineaTransporte } from "../../model/LineaTransporte";
+const Lines = new LineaTransporte();
 
-export default function Map() {
+export default function Map(props) {
+  const { navigation } = props;
   const toastRef = useRef();
   const [mapView, setmapView] = useState({});
   const [location, setlocation] = useState(null);
   const [UserLogged, setUserLogged] = useState(false);
+  const [fileKml, setFileKml] = useState(null);
+
+  if (navigation.state.params) {
+    const promise = Lines.MostrarRecorridoLinea(
+      navigation.state.params.idlineTransport
+    );
+
+    promise.then((kml) => {
+      setFileKml(kml);
+    });
+  }
 
   /* validar si el usuario esta logeado  no */
   useEffect(() => {
@@ -48,6 +62,8 @@ export default function Map() {
 
   /* funcion para enviar la ubicacion del usuario */
   const findLocation = (props) => {
+    console.log(fileKml);
+
     if (props === null) {
       toastRef.current.show("El GPS esta desactivado!", 2000);
     } else {
@@ -75,9 +91,10 @@ export default function Map() {
         ref={(mapView) => {
           setmapView(mapView);
         }}
+        kmlSrc={fileKml}
         style={{ height: "100%", width: "100%" }}
-        mapType="standard"
-        provider="google"
+        mapType="mutedStandard"
+        provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: -35.423244,
           longitude: -71.648483,
@@ -90,7 +107,11 @@ export default function Map() {
         zoomControlEnabled={false}
         loadingEnabled={true}
       >
-        <RenderTrasports UserLogged={UserLogged} toastRef={toastRef} />
+        <RenderTrasports
+          UserLogged={UserLogged}
+          toastRef={toastRef}
+          navigation={navigation}
+        />
       </MapView>
       <Icon
         reverse
@@ -100,6 +121,7 @@ export default function Map() {
         onPress={() => findLocation(location)}
         containerStyle={styles.btnContainer}
       />
+
       <Toast ref={toastRef} position="center" opacity={0.5} />
     </View>
   );

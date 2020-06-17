@@ -7,17 +7,17 @@ const trasport = new Transporte();
 const coordinate = new Coordenada();
 
 export default function RenderTrasports(props) {
-  const { UserLogged, toastRef } = props;
+  const { UserLogged, toastRef, navigation } = props;
   const [listMarkers, setListMarkers] = useState([]);
 
-  const promise = coordinate.buscarTodasLasCoordenadas();
-
+  promise = coordinate.buscarTodasLasCoordenadas();
   /* extrae las coordenadas que bienen en la promise */
   promise.then((coordinats) => {
     const resultCoordinateTrasport = [];
     coordinats.forEach((doc) => {
       resultCoordinateTrasport.push(doc);
     });
+
     setListMarkers(resultCoordinateTrasport);
   });
 
@@ -36,7 +36,7 @@ export default function RenderTrasports(props) {
           <Callout
             onPress={() => {
               UserLogged
-                ? console.log("redireccionar a modal informacion")
+                ? navigation.navigate("Transport")
                 : toastRef.current.show(
                     "Para mas informacion debe iniciar Sesion",
                     3000

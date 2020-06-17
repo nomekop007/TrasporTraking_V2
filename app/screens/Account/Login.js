@@ -49,23 +49,23 @@ const styles = StyleSheet.create({
   logo: {
     width: "100%",
     height: 150,
-    marginTop: 20
+    marginTop: 20,
   },
   viewContainer: {
     marginRight: 40,
-    marginLeft: 40
+    marginLeft: 40,
   },
   textRegister: {
     marginTop: 15,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   btnRegister: {
     color: "#EF0B0B",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   divider: {
     backgroundColor: "#EF0B0B",
-    margin: 40
-  }
+    margin: 40,
+  },
 });

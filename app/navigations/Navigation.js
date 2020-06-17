@@ -26,7 +26,7 @@ const NavigationStacks = createBottomTabNavigator(
         ),
       }),
     },
-    Favorite: {
+    Favorites: {
       screen: FavoriteScreenStacks,
       navigationOptions: () => ({
         tabBarLabel: "Favoritos",
@@ -40,7 +40,7 @@ const NavigationStacks = createBottomTabNavigator(
         ),
       }),
     },
-    Map: {
+    Maps: {
       screen: MapScreenStacks,
       navigationOptions: () => ({
         tabBarLabel: "Mapa",
@@ -72,7 +72,7 @@ const NavigationStacks = createBottomTabNavigator(
   // configurar movilidad Tab
   {
     initialRouteName: "Account", //donde inica el tab
-    order: ["LineTrasports", "Favorite", "Map", "Account"], //orden de tabs
+    order: ["LineTrasports", "Favorites", "Maps", "Account"], //orden de tabs
     tabBarOptions: {
       inactiveTintColor: "#646464", //color tabs inactivos
       activeTintColor: "#EF0B0B", // color tab activo

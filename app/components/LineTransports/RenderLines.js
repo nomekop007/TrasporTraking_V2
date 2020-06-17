@@ -38,13 +38,18 @@ export default function RenderLines(props) {
 
 function LineasTranportInfo(props) {
   const { line, navigation } = props;
-  const { idAgencia, idLineaTransporte, nombreLinea } = line.item;
+  const { nombreLinea } = line.item;
 
-  const descripcion =
-    "La línea X de autobús (Dirección: Puertas Del Sur) tiene 59 paradas desde Terminal Taxual A / Cruce Ruta 5 hasta K-610 / Terminal A. ";
+  const descripcion = "La " + nombreLinea + " perteneciente a la agencia";
 
   return (
-    <TouchableOpacity onPress={() => console.log("ir a navegacion")}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Map", {
+          idlineTransport: line.item.idLineaTransporte,
+        })
+      }
+    >
       <View style={styles.viewLineTransport}>
         <View style={styles.viewLineImage}>
           <Image
