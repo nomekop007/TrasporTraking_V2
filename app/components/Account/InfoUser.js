@@ -55,10 +55,10 @@ export default function InfoUser(props) {
   };
 
   /* funcion para actualizar imagen del usuario  */
-  const updatePhotoUrl = (uid) => {
+  const updatePhotoUrl = (uidImagen) => {
     firebase
       .storage()
-      .ref(`usuarios/avatar/${uid}`)
+      .ref(`usuarios/avatar/${uidImagen}`)
       .getDownloadURL()
       .then(async (result) => {
         const update = {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { Input, Button, colors } from "react-native-elements";
+import { Input, Button } from "react-native-elements";
 import * as firebase from "firebase";
 import { reauthenticate } from "../../utils/Api";
 
@@ -20,7 +20,7 @@ export default function ChangePasswordForm(props) {
     /* validando campos vacios */
     if (!password || !newPassword || !newPasswordRepeat) {
       let objError = {};
-      !password && (objError.password = "No puede estar vacio");
+      !password && (objError.realPassword = "No puede estar vacio");
       !newPassword && (objError.newPassword = "No puede estar vacio");
       !newPasswordRepeat &&
         (objError.newPasswordRepeat = "No puede estar vacio");
@@ -30,7 +30,7 @@ export default function ChangePasswordForm(props) {
       if (newPassword !== newPasswordRepeat) {
         setError({
           newPassword: "Las nuevas contraseñas tiene que ser iguales",
-          newPasswordRepeat: "Las nuevas contraseñas tiene que ser iguales"
+          newPasswordRepeat: "Las nuevas contraseñas tiene que ser iguales",
         });
       } else {
         setIsLoading(true);
@@ -49,7 +49,7 @@ export default function ChangePasswordForm(props) {
               .catch(() => {
                 //error general
                 setError({
-                  general: "Error al actualizar la contraseña"
+                  general: "Error al actualizar la contraseña",
                 });
                 setIsLoading(false);
               });
@@ -57,7 +57,7 @@ export default function ChangePasswordForm(props) {
           .catch(() => {
             //la contraseña fue incorrecta
             setError({
-              password: "La contraseña no es correcta"
+              realPassword: "La contraseña no es correcta",
             });
             setIsLoading(false);
           });
@@ -73,14 +73,14 @@ export default function ChangePasswordForm(props) {
         password={true}
         maxLength={30}
         secureTextEntry={hidePassword}
-        onChange={e => setPasword(e.nativeEvent.text)}
+        onChange={(e) => setPasword(e.nativeEvent.text)}
         rightIcon={{
           type: "material-community",
           name: hidePassword ? "eye-outline" : "eye-off-outline",
           color: "#c2c2c2",
-          onPress: () => setHidePassword(!hidePassword)
+          onPress: () => setHidePassword(!hidePassword),
         }}
-        errorMessage={error.password}
+        errorMessage={error.realPassword}
       />
       <Input
         placeholder="Nueva contraseña"
@@ -88,12 +88,12 @@ export default function ChangePasswordForm(props) {
         password={true}
         maxLength={30}
         secureTextEntry={hideNewPassword}
-        onChange={e => setNewPassword(e.nativeEvent.text)}
+        onChange={(e) => setNewPassword(e.nativeEvent.text)}
         rightIcon={{
           type: "material-community",
           name: hideNewPassword ? "eye-outline" : "eye-off-outline",
           color: "#c2c2c2",
-          onPress: () => setHideNewPassword(!hideNewPassword)
+          onPress: () => setHideNewPassword(!hideNewPassword),
         }}
         errorMessage={error.newPassword}
       />
@@ -103,12 +103,12 @@ export default function ChangePasswordForm(props) {
         password={true}
         maxLength={30}
         secureTextEntry={hideNewPasswordRepeat}
-        onChange={e => setNewPasswordRepeat(e.nativeEvent.text)}
+        onChange={(e) => setNewPasswordRepeat(e.nativeEvent.text)}
         rightIcon={{
           type: "material-community",
           name: hideNewPasswordRepeat ? "eye-outline" : "eye-off-outline",
           color: "#c2c2c2",
-          onPress: () => sethideNewPasswordRepeat(!hideNewPasswordRepeat)
+          onPress: () => sethideNewPasswordRepeat(!hideNewPasswordRepeat),
         }}
         errorMessage={error.newPasswordRepeat}
       />
@@ -129,16 +129,16 @@ const styles = StyleSheet.create({
   View: {
     alignItems: "center",
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   input: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   btnContainer: {
     marginTop: 20,
-    width: "95%"
+    width: "95%",
   },
   btn: {
-    backgroundColor: "#EF0B0B"
-  }
+    backgroundColor: "#EF0B0B",
+  },
 });

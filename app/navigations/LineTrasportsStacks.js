@@ -1,7 +1,7 @@
 import { createStackNavigator } from "react-navigation-stack";
 import LineTransportsScreen from "../screens/LineTransports/LineTransports";
 
-const TrasportsScreenStack = createStackNavigator({
+const LineTrasportsStacks = createStackNavigator({
   LineTrasports: {
     screen: LineTransportsScreen,
     navigationOptions: () => ({
@@ -10,4 +10,4 @@ const TrasportsScreenStack = createStackNavigator({
   },
 });
 
-export default TrasportsScreenStack;
+export default LineTrasportsStacks;

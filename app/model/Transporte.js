@@ -29,9 +29,9 @@ export class Transporte {
           .collection("LineaTransporte")
           .doc(transporte.lineaTransporte)
           .get()
-          .then((doc) => {
+          .then((obj) => {
             /* cambio del idlinea por nombre de la linea */
-            transporte.lineaTransporte = doc.data().nombreLinea;
+            transporte.lineaTransporte = obj.data().nombreLinea;
             return transporte;
           });
       })

@@ -37,7 +37,7 @@ export default function ChangeEmailForm(props) {
             });
         })
         .catch(() => {
-          setError({ password: "La Contraseña no es correcta" });
+          setError({ pass: "La Contraseña no es correcta" });
           setisLoading(false);
         });
     }
@@ -51,7 +51,7 @@ export default function ChangeEmailForm(props) {
         type="validateEmail"
         containerStyle={styles.input}
         maxLength={30}
-        defaultValue={email && email}
+        defaultValue={email || ""}
         onChange={(e) => setnewEmail(e.nativeEvent.text)}
         rightIcon={{
           type: "material-community",
@@ -73,7 +73,7 @@ export default function ChangeEmailForm(props) {
           color: "#c2c2c2",
           onPress: () => setHidePassword(!hidePassword),
         }}
-        errorMessage={error.password}
+        errorMessage={error.pass}
       />
       <Button
         title="Cambiar email"

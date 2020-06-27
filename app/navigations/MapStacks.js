@@ -2,7 +2,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import MapScreen from "../screens/Map/Map";
 import TransportScreen from "../screens/Map/Transport";
 
-const MapScreenStacks = createStackNavigator({
+const MapStacks = createStackNavigator({
   Map: {
     screen: MapScreen,
     navigationOptions: () => ({
@@ -17,4 +17,4 @@ const MapScreenStacks = createStackNavigator({
   },
 });
 
-export default MapScreenStacks;
+export default MapStacks;

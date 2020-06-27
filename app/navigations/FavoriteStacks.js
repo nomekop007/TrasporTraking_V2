@@ -1,7 +1,7 @@
 import { createStackNavigator } from "react-navigation-stack";
 import FavoriteScreen from "../screens/Favorite/Favorite";
 
-const FavoriteScreenStacks = createStackNavigator({
+const FavoriteStacks = createStackNavigator({
   Favorite: {
     screen: FavoriteScreen,
     navigationOptions: () => ({
@@ -10,4 +10,4 @@ const FavoriteScreenStacks = createStackNavigator({
   },
 });
 
-export default FavoriteScreenStacks;
+export default FavoriteStacks;

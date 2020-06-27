@@ -4,7 +4,7 @@ import MyAccountScreen from "../screens/Account/MyAccount";
 import LoginScreen from "../screens/Account/Login";
 import RegisterScreen from "../screens/Account/Register";
 
-const MyAccountScreenStacks = createStackNavigator({
+const AccountStacks = createStackNavigator({
   MyAccount: {
     screen: MyAccountScreen,
     navigationOptions: () => ({
@@ -25,4 +25,4 @@ const MyAccountScreenStacks = createStackNavigator({
   },
 });
 
-export default MyAccountScreenStacks;
+export default AccountStacks;

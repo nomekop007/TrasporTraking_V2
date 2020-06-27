@@ -10,26 +10,26 @@ export default function RenderTrasports(props) {
   const { UserLogged, toastRef, navigation } = props;
   const [listMarkers, setListMarkers] = useState([]);
 
-  promise = coordinate.buscarTodasLasCoordenadas();
+  const promise = coordinate.buscarTodasLasCoordenadas();
+
   /* extrae las coordenadas que bienen en la promise */
   promise.then((coordinats) => {
     const resultCoordinateTrasport = [];
     coordinats.forEach((doc) => {
       resultCoordinateTrasport.push(doc);
     });
-
     setListMarkers(resultCoordinateTrasport);
   });
 
   return (
     /* devuelve lista de markers */
     <View>
-      {listMarkers.map((coordinate) => (
+      {listMarkers.map((marker) => (
         <Marker
-          key={coordinate.val().idTransporte}
+          key={marker.val().idTransporte}
           coordinate={{
-            latitude: coordinate.val().latitud,
-            longitude: coordinate.val().longitud,
+            latitude: marker.val().latitud,
+            longitude: marker.val().longitud,
           }}
           icon={require("../../../assets/img/icono.png")}
         >
@@ -43,7 +43,7 @@ export default function RenderTrasports(props) {
                   );
             }}
           >
-            <LoadingInfoTrasport ID={coordinate.val().idTransporte} />
+            <LoadingInfoTrasport ID={marker.val().idTransporte} />
           </Callout>
         </Marker>
       ))}
