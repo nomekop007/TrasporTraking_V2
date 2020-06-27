@@ -38,9 +38,23 @@ export default function RenderLines(props) {
 
 function LineasTranportInfo(props) {
   const { line, navigation } = props;
-  const { nombreLinea } = line.item;
+  const { nombreLinea, idAgencia } = line.item;
 
-  const descripcion = "La " + nombreLinea + " perteneciente a la agencia";
+  let agencia = "";
+  switch (idAgencia) {
+    case "a1":
+      agencia = "Taxutal";
+      break;
+    case "a2":
+      agencia = "Abate Molina";
+      break;
+    case "a3":
+      agencia = "Sotratal";
+      break;
+    default:
+      agencia = "Agencia desconocida";
+      break;
+  }
 
   return (
     <TouchableOpacity
@@ -60,8 +74,8 @@ function LineasTranportInfo(props) {
           />
         </View>
         <View style={styles.viewInfoLine}>
-          <Text style={{ fontWeight: "bold" }}>{nombreLinea}</Text>
-          <Text style={styles.description}>{descripcion.substr(0, 80)}...</Text>
+          <Text style={styles.title}>{nombreLinea}</Text>
+          <Text style={styles.description}>{agencia}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -95,18 +109,25 @@ const styles = StyleSheet.create({
   },
   viewLineTransport: {
     flexDirection: "row",
-    margin: 10,
+    margin: 20,
+    backgroundColor: "#1555F9",
+    borderRadius: 100,
   },
   viewLineImage: {
     marginRight: 15,
   },
   imageLine: {
-    width: 80,
-    height: 80,
+    width: 77,
+    height: 78,
+  },
+  title: {
+    fontWeight: "bold",
+    paddingTop: 15,
+    fontSize: 25,
   },
   description: {
     paddingTop: 2,
-    color: "grey",
+    color: "#FFFFFF",
     width: 300,
   },
   notfoundLines: {

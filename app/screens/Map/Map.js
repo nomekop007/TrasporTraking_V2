@@ -62,8 +62,6 @@ export default function Map(props) {
 
   /* funcion para enviar la ubicacion del usuario */
   const findLocation = (props) => {
-    console.log(fileKml);
-
     if (props === null) {
       toastRef.current.show("El GPS esta desactivado!", 2000);
     } else {
