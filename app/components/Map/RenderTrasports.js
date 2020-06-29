@@ -36,7 +36,9 @@ export default function RenderTrasports(props) {
           <Callout
             onPress={() => {
               UserLogged
-                ? navigation.navigate("Transport")
+                ? navigation.navigate("Transport", {
+                    idTransport: marker.val().idTransporte,
+                  })
                 : toastRef.current.show(
                     "Para mas informacion debe iniciar Sesion",
                     3000

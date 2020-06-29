@@ -28,7 +28,7 @@ export default function RenderLines(props) {
         />
       ) : (
         <View style={styles.loaderLines}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="large" color="#EF0B0B" />
           <Text>Cargando Lineas </Text>
         </View>
       )}
@@ -38,7 +38,7 @@ export default function RenderLines(props) {
 
 function LineasTranportInfo(props) {
   const { line, navigation } = props;
-  const { nombreLinea, idAgencia } = line.item;
+  const { nombreLinea, idAgencia, idLineaTransporte } = line.item;
 
   let agencia = "";
   switch (idAgencia) {
@@ -60,7 +60,8 @@ function LineasTranportInfo(props) {
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("Map", {
-          idlineTransport: line.item.idLineaTransporte,
+          idlineTransport: idLineaTransporte,
+          nameTransport: nombreLinea,
         })
       }
     >
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   viewLineTransport: {
     flexDirection: "row",
     margin: 20,
-    backgroundColor: "#1555F9",
+    backgroundColor: "#f2f2f2",
     borderRadius: 100,
   },
   viewLineImage: {
@@ -122,12 +123,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
+
     paddingTop: 15,
-    fontSize: 25,
+    fontSize: 22,
   },
   description: {
     paddingTop: 2,
-    color: "#FFFFFF",
+
     width: 300,
   },
   notfoundLines: {

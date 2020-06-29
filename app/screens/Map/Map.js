@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
@@ -17,14 +17,21 @@ export default function Map(props) {
   const [location, setlocation] = useState(null);
   const [UserLogged, setUserLogged] = useState(false);
   const [fileKml, setFileKml] = useState(null);
+  const [infoTransport, setinfoTransport] = useState(false);
+  console.log(infoTransport);
+  console.log(fileKml + "");
 
+  let nameTransport = null;
+
+  /* preguntar si biene una id de los params */
   if (navigation.state.params) {
     const promise = Lines.MostrarRecorridoLinea(
       navigation.state.params.idlineTransport
     );
-
+    nameTransport = navigation.state.params.nameTransport;
     promise.then((kml) => {
       setFileKml(kml);
+      setinfoTransport(true);
     });
   }
 
@@ -91,7 +98,7 @@ export default function Map(props) {
         }}
         kmlSrc={fileKml}
         style={{ height: "100%", width: "100%" }}
-        mapType="mutedStandard"
+        mapType="standard"
         provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: -35.423244,
@@ -111,6 +118,13 @@ export default function Map(props) {
           navigation={navigation}
         />
       </MapView>
+      <ShowInfoLineTransport
+        nameTransport={nameTransport}
+        infoTransport={infoTransport}
+        setinfoTransport={setinfoTransport}
+        setFileKml={setFileKml}
+      />
+
       <Icon
         reverse
         type="material-community"
@@ -125,14 +139,69 @@ export default function Map(props) {
   );
 }
 
+function ShowInfoLineTransport(props) {
+  const { nameTransport, infoTransport, setinfoTransport, setFileKml } = props;
+
+  /* funcion para ocultar la leyenda */
+  const HideInfoLineTransport = () => {
+    setinfoTransport(false);
+    setFileKml(null);
+  };
+
+  return infoTransport ? (
+    <View style={styles.container}>
+      <Text style={{ fontSize: 17 }}> Recorrido : {nameTransport} </Text>
+
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => HideInfoLineTransport()}
+        >
+          <Icon
+            type="material-community"
+            name="close-circle-outline"
+            color="#FF0000"
+          />
+          <Text style={{ fontSize: 10, textAlign: "center" }}>cerrar</Text>
+        </TouchableOpacity>
+
+        <View style={{ flex: 3 }}>
+          <Text style={styles.ida}> Ida</Text>
+          <Text style={styles.vuelta}> regreso</Text>
+        </View>
+      </View>
+    </View>
+  ) : (
+    <View></View>
+  );
+}
+
 /* estilos */
 const styles = StyleSheet.create({
   btnContainer: {
     position: "absolute",
     bottom: 10,
-    right: 10,
+    right: 15,
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.5,
+  },
+  container: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    margin: 10,
+    borderRadius: 8,
+  },
+  vuelta: {
+    backgroundColor: "red",
+    color: "#fff",
+    borderRadius: 9,
+    textAlign: "center",
+  },
+  ida: {
+    backgroundColor: "blue",
+    color: "#fff",
+    borderRadius: 9,
+    textAlign: "center",
   },
 });
