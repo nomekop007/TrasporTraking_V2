@@ -18,8 +18,6 @@ export default function Map(props) {
   const [UserLogged, setUserLogged] = useState(false);
   const [fileKml, setFileKml] = useState(null);
   const [infoTransport, setinfoTransport] = useState(false);
-  console.log(infoTransport);
-  console.log(fileKml + "");
 
   let nameTransport = null;
 

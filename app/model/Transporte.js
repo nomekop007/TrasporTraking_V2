@@ -31,7 +31,7 @@ export class Transporte {
           .get()
           .then((obj) => {
             /* cambio del idlinea por nombre de la linea */
-            transporte.lineaTransporte = obj.data().nombreLinea;
+            transporte.nombreLinea = obj.data().nombreLinea;
             return transporte;
           });
       })

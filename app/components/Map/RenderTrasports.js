@@ -58,7 +58,7 @@ function LoadingInfoTrasport(props) {
   const { ID } = props;
   const [Transport, setTransport] = useState({
     patente: "Cargando..",
-    lineaTransporte: "Cargando..",
+    nombreLinea: "Cargando..",
   });
 
   useEffect(() => {
@@ -70,7 +70,7 @@ function LoadingInfoTrasport(props) {
 
   return (
     <View>
-      <Text style={MyStyles.titleLinea}>{Transport.lineaTransporte}</Text>
+      <Text style={MyStyles.titleLinea}>{Transport.nombreLinea}</Text>
       <Text style={{ textAlign: "center" }}>Patente :{Transport.patente}</Text>
     </View>
   );

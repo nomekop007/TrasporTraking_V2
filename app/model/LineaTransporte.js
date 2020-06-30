@@ -66,55 +66,5 @@ export class LineaTransporte {
       });
 
     return promise;
-    /*  let kml = null;
-
-    switch (idLineaTransporte) {
-      case "l1":
-        kml = URL("../../assets/raw/l1.kml");
-        break;
-       case "l2":
-        kml = File("../../assets/raw/l2.kml");
-        break;
-      case "l3":
-        kml = File("../../assets/raw/l3.kml");
-        break;
-      case "l3b":
-        kml = require("../../assets/raw/l3b.kml");
-        break;
-      case "l4":
-        kml = require("../../assets/raw/l4.kml");
-        break;
-      case "l5":
-        kml = require("../../assets/raw/l5.kml");
-        break;
-      case "l6":
-        kml = require("../../assets/raw/l6.kml");
-        break;
-      case "l7":
-        kml = require("../../assets/raw/l7.kml");
-        break;
-      case "la":
-        kml = require("../../assets/raw/la.kml");
-        break;
-      case "lb":
-        kml = require("../../assets/raw/lb.kml");
-        break;
-      case "lc":
-        kml = require("../../assets/raw/lc.kml");
-        break;
-      case "lcolin":
-        kml = require("../../assets/raw/lcolin.kml");
-        break;
-      case "ld":
-        kml = require("../../assets/raw/ld.kml");
-        break; 
-
-      default:
-        kml = null;
-        break;
-    }
-    console.log(kml);
-
-    return kml; */
   }
 }
