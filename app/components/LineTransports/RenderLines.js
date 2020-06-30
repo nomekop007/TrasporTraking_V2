@@ -38,32 +38,26 @@ export default function RenderLines(props) {
 
 function LineasTranportInfo(props) {
   const { line, navigation } = props;
-  const { nombreLinea, idAgencia, idLineaTransporte } = line.item;
+  const lineTransport = line.item;
 
-  let agencia = "";
-  switch (idAgencia) {
+  switch (lineTransport.idAgencia) {
     case "a1":
-      agencia = "Taxutal";
+      lineTransport.nombreAgencia = "Taxutal";
       break;
     case "a2":
-      agencia = "Abate Molina";
+      lineTransport.nombreAgencia = "Abate Molina";
       break;
     case "a3":
-      agencia = "Sotratal";
+      lineTransport.nombreAgencia = "Sotratal";
       break;
     default:
-      agencia = "Agencia desconocida";
+      lineTransport.nombreAgencia = "Agencia desconocida";
       break;
   }
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Map", {
-          idlineTransport: idLineaTransporte,
-          nameTransport: nombreLinea,
-        })
-      }
+      onPress={() => navigation.navigate("LineTrasport", lineTransport)}
     >
       <View style={styles.viewLineTransport}>
         <View style={styles.viewLineImage}>
@@ -75,8 +69,8 @@ function LineasTranportInfo(props) {
           />
         </View>
         <View style={styles.viewInfoLine}>
-          <Text style={styles.title}>{nombreLinea}</Text>
-          <Text style={styles.description}>{agencia}</Text>
+          <Text style={styles.title}>{lineTransport.nombreLinea}</Text>
+          <Text style={styles.description}>{lineTransport.nombreAgencia}</Text>
         </View>
       </View>
     </TouchableOpacity>

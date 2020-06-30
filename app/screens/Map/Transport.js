@@ -28,8 +28,11 @@ export default function Transport(props) {
   return isLoading ? (
     <ScrollView style={styles.viewBody}>
       <View>
-        <Text>esto es la info del transporte... {idTransport}</Text>
-        <Text>{Transport.nombreConductor}</Text>
+        <Text>id : {idTransport}</Text>
+        <Text>conductor : {Transport.nombreConductor}</Text>
+        <Text>patente : {Transport.patente}</Text>
+        <Text>nombre linea : {Transport.nombreLinea}</Text>
+        <Text>id linea : {Transport.lineaTransporte}</Text>
       </View>
     </ScrollView>
   ) : (
