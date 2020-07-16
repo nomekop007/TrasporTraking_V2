@@ -6,7 +6,7 @@ import { Coordenada } from "../../model/Coordenada";
 const trasport = new Transporte();
 const coordinate = new Coordenada();
 
-export default function RenderTrasports(props) {
+export default function RenderAllTransports(props) {
   const { UserLogged, toastRef, navigation } = props;
   const [listMarkers, setListMarkers] = useState([]);
 

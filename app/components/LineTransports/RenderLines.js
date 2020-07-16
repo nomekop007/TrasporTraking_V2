@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { Image } from "react-native-elements";
 import { size } from "lodash";
+import { Agencia } from "../../model/Agencia";
+const agencia = new Agencia();
 
 export default function RenderLines(props) {
   const { navigation, LineTransports, handleLoadMore, isLoading } = props;
@@ -40,20 +42,10 @@ function LineasTranportInfo(props) {
   const { line, navigation } = props;
   const lineTransport = line.item;
 
-  switch (lineTransport.idAgencia) {
-    case "a1":
-      lineTransport.nombreAgencia = "Taxutal";
-      break;
-    case "a2":
-      lineTransport.nombreAgencia = "Abate Molina";
-      break;
-    case "a3":
-      lineTransport.nombreAgencia = "Sotratal";
-      break;
-    default:
-      lineTransport.nombreAgencia = "Agencia desconocida";
-      break;
-  }
+  /* se busca el nombre de la linea */
+  lineTransport.nombreAgencia = agencia.BuscarNombreDeAgencia(
+    lineTransport.idAgencia
+  );
 
   return (
     <TouchableOpacity

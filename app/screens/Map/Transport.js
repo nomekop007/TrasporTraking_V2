@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Transporte } from "../../model/Transporte";
+import RenderTransport from "../../components/Map/RenderTransport";
 const transport = new Transporte();
 
 export default function Transport(props) {
@@ -23,16 +24,10 @@ export default function Transport(props) {
     });
   }, []);
 
-  console.log(Transport);
-
   return isLoading ? (
     <ScrollView style={styles.viewBody}>
       <View>
-        <Text>id : {idTransport}</Text>
-        <Text>conductor : {Transport.nombreConductor}</Text>
-        <Text>patente : {Transport.patente}</Text>
-        <Text>nombre linea : {Transport.nombreLinea}</Text>
-        <Text>id linea : {Transport.lineaTransporte}</Text>
+        <RenderTransport transport={Transport} />
       </View>
     </ScrollView>
   ) : (

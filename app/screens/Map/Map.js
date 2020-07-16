@@ -5,7 +5,7 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Toast from "react-native-easy-toast";
-import RenderTrasports from "../../components/Map/RenderTrasports";
+import RenderAllTransports from "../../components/Map/RenderAllTransports";
 import firebase from "firebase";
 
 export default function Map(props) {
@@ -91,7 +91,7 @@ export default function Map(props) {
         zoomControlEnabled={false}
         loadingEnabled={true}
       >
-        <RenderTrasports
+        <RenderAllTransports
           UserLogged={UserLogged}
           toastRef={toastRef}
           navigation={navigation}
