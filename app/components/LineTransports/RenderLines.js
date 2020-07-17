@@ -47,6 +47,8 @@ function LineasTranportInfo(props) {
     lineTransport.idAgencia
   );
 
+  const URLimage = agencia.BuscarImagenDeAgencia(lineTransport.idAgencia);
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("LineTrasport", lineTransport)}
@@ -56,7 +58,7 @@ function LineasTranportInfo(props) {
           <Image
             resizeMode="cover"
             PlaceholderContent={<ActivityIndicator color="ff" />}
-            source={require("../../../assets/img/original.png")}
+            source={URLimage}
             style={styles.imageLine}
           />
         </View>
@@ -102,10 +104,12 @@ const styles = StyleSheet.create({
   },
   viewLineImage: {
     marginRight: 15,
+    borderRadius: 200 / 2,
   },
   imageLine: {
-    width: 77,
-    height: 78,
+    width: 70,
+    height: 70,
+    borderRadius: 200 / 2,
   },
   title: {
     fontWeight: "bold",

@@ -22,4 +22,20 @@ export class Agencia {
         return "Agencia desconocida";
     }
   }
+
+  BuscarImagenDeAgencia(idAgencia) {
+    switch (idAgencia) {
+      case "a1z":
+        return require("../../assets/imagenes_lineas/agencias/taxutal2.jpg");
+
+      case "a2z":
+        return require("../../assets/imagenes_lineas/agencias/abatemolina2.jpg");
+
+      case "a3z":
+        return require("../../assets/imagenes_lineas/agencias/sotratal2.jpg");
+
+      default:
+        return require("../../assets/img/original.png");
+    }
+  }
 }

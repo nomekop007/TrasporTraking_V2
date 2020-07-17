@@ -41,7 +41,6 @@ export default function Transport(props) {
 const styles = StyleSheet.create({
   viewBody: {
     flex: 1,
-    margin: 15,
   },
   loader: {
     marginTop: 20,

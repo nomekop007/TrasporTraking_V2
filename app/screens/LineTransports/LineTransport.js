@@ -28,8 +28,8 @@ export default function LineTranporte(props) {
         initialRegion={{
           latitude: -35.423244,
           longitude: -71.648483,
-          latitudeDelta: 0.031,
-          longitudeDelta: 0.031,
+          latitudeDelta: 0.057,
+          longitudeDelta: 0.057,
         }}
         showsUserLocation={true}
       />
