@@ -35,7 +35,7 @@ export class Transporte {
             return transporte;
           });
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log("error de extraccion :", error);
       });
 

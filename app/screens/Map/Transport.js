@@ -19,8 +19,10 @@ export default function Transport(props) {
   useEffect(() => {
     const promise = transport.buscarTransporte(idTransport);
     promise.then((doc) => {
-      setTransport(doc);
-      setisLoading(true);
+      if (doc !== undefined) {
+        setTransport(doc);
+        setisLoading(true);
+      }
     });
   }, []);
 

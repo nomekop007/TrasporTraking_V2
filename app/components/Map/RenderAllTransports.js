@@ -24,31 +24,35 @@ export default function RenderAllTransports(props) {
   return (
     /* devuelve lista de markers */
     <View>
-      {listMarkers.map((marker) => (
-        <Marker
-          key={marker.val().idTransporte}
-          coordinate={{
-            latitude: marker.val().latitud,
-            longitude: marker.val().longitud,
-          }}
-          icon={require("../../../assets/img/icono.png")}
-        >
-          <Callout
-            onPress={() => {
-              UserLogged
-                ? navigation.navigate("Transport", {
-                    idTransport: marker.val().idTransporte,
-                  })
-                : toastRef.current.show(
-                    "Para mas informacion debe iniciar Sesion",
-                    3000
-                  );
-            }}
-          >
-            <LoadingInfoTrasport ID={marker.val().idTransporte} />
-          </Callout>
-        </Marker>
-      ))}
+      {listMarkers.map((marker) => {
+        if (marker.val().latitud !== 0 || marker.val().longitud !== 0) {
+          return (
+            <Marker
+              key={marker.val().idTransporte}
+              coordinate={{
+                latitude: marker.val().latitud,
+                longitude: marker.val().longitud,
+              }}
+              icon={require("../../../assets/img/icono.png")}
+            >
+              <Callout
+                onPress={() => {
+                  UserLogged
+                    ? navigation.navigate("Transport", {
+                        idTransport: marker.val().idTransporte,
+                      })
+                    : toastRef.current.show(
+                        "Para mas informacion debe iniciar Sesion",
+                        3000
+                      );
+                }}
+              >
+                <LoadingInfoTrasport ID={marker.val().idTransporte} />
+              </Callout>
+            </Marker>
+          );
+        }
+      })}
     </View>
   );
 }
@@ -63,8 +67,11 @@ function LoadingInfoTrasport(props) {
 
   useEffect(() => {
     const promise = trasport.buscarTransporte(ID);
-    promise.then((trasportInfo) => {
-      setTransport(trasportInfo);
+
+    promise.then((transportInfo) => {
+      if (transportInfo !== undefined) {
+        setTransport(transportInfo);
+      }
     });
   }, []);
 
