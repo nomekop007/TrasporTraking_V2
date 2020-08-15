@@ -12,3 +12,5 @@ export default function App() {
 
   return <Navigation />;
 }
+
+//rama redux
