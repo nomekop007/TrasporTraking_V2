@@ -1,7 +1,9 @@
 import React from "react";
 import Navigation from "./app/navigations/Navigation";
-import { firebaseapp } from "./app/utils/Firebase";
 import ignoreWarnings from "react-native-ignore-warnings";
+//redux
+import { Provider } from "react-redux";
+import store from "./app/redux/store";
 
 export default function App() {
   /* quitar advertencias */
@@ -10,7 +12,11 @@ export default function App() {
   ignoreWarnings("Warning: componentWillMount");
   ignoreWarnings("VirtualizedLists should never");
 
-  return <Navigation />;
+  return (
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
+  );
 }
 
 //rama redux
