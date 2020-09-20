@@ -101,4 +101,12 @@ export class LineaTransporte {
 
     return promise;
   }
+
+  async buscarLineaTransporte(idLinea) {
+    const promise = await firestore
+      .collection("LineaTransporte")
+      .doc(idLinea)
+      .get();
+    return promise;
+  }
 }

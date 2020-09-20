@@ -7,45 +7,33 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import { Image } from "react-native-elements";
-import { size } from "lodash";
+import { Image, Icon } from "react-native-elements";
 import { Agencia } from "../../model/Agencia";
 const agencia = new Agencia();
 
-export default function RenderLines(props) {
-  const { navigation, LineTransports, handleLoadMore, isLoading } = props;
+export default function RenderFavorites(props) {
+  const { lineTransports, navigation } = props;
 
   return (
-    <View>
-      {size(LineTransports) ? (
-        <FlatList
-          data={LineTransports}
-          renderItem={(line) => (
-            <LineasTranportInfo navigation={navigation} line={line} />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          onEndReachedThreshold={0.5}
-          onEndReached={handleLoadMore}
-          ListFooterComponent={<FooterListLines isLoading={isLoading} />}
-        />
-      ) : (
-        <View style={styles.loaderLines}>
-          <ActivityIndicator size="large" color="#EF0B0B" />
-          <Text>Cargando Lineas </Text>
-        </View>
+    <FlatList
+      data={lineTransports}
+      renderItem={(line) => (
+        <LineTransportInfo line={line} navigation={navigation} />
       )}
-    </View>
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 }
 
-function LineasTranportInfo(props) {
+function LineTransportInfo(props) {
   const { line, navigation } = props;
   const lineTransport = line.item;
-  const URLimage = agencia.BuscarImagenDeAgencia(lineTransport.idAgencia);
-  /* se busca el nombre de la linea */
+
   lineTransport.nombreAgencia = agencia.BuscarNombreDeAgencia(
     lineTransport.idAgencia
   );
+
+  const URLimage = agencia.BuscarImagenDeAgencia(lineTransport.idAgencia);
 
   return (
     <TouchableOpacity
@@ -60,32 +48,23 @@ function LineasTranportInfo(props) {
             style={styles.imageLine}
           />
         </View>
+
         <View style={styles.viewInfoLine}>
           <Text style={styles.title}>{lineTransport.nombreLinea}</Text>
           <Text style={styles.description}>{lineTransport.nombreAgencia}</Text>
         </View>
+        <View style={styles.viewHeart}>
+          <Icon
+            type="material-community"
+            name="heart"
+            color="#f00"
+            size={35}
+            underlayColor="transparent"
+          />
+        </View>
       </View>
     </TouchableOpacity>
   );
-}
-
-/* funcion para cargar mas lineas */
-function FooterListLines(props) {
-  const { isLoading } = props;
-
-  if (isLoading) {
-    return (
-      <View style={styles.loaderLines}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.notfoundLines}>
-        <Text>no quedan lineas por cargar</Text>
-      </View>
-    );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -104,25 +83,27 @@ const styles = StyleSheet.create({
     marginRight: 15,
     borderRadius: 200 / 2,
   },
+  viewInfoLine: {
+    marginRight: 15,
+  },
+  viewHeart: {
+    marginRight: 15,
+    top: 6,
+    right: 90,
+  },
+
   imageLine: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     borderRadius: 200 / 2,
   },
   title: {
     fontWeight: "bold",
-
-    paddingTop: 12,
-    fontSize: 20,
+    paddingTop: 7,
+    fontSize: 13,
   },
   description: {
     paddingTop: 2,
-
     width: 300,
-  },
-  notfoundLines: {
-    marginTop: 10,
-    marginBottom: 20,
-    alignItems: "center",
   },
 });
