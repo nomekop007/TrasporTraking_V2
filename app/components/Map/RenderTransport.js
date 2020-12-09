@@ -5,17 +5,16 @@ const lineaTransporte = new LineaTransporte();
 
 export default function RenderTransport(props) {
   const { transport } = props;
-  console.log(transport);
+
   const URLimage = lineaTransporte.buscarImagenLinea(transport.lineaTransporte);
 
   return (
     <View>
       <Image style={styles.image} source={URLimage} />
       <View style={styles.container}>
-        <Text>{transport.nombreConductor}</Text>
-        <Text>{transport.idTransporte}</Text>
+        <Text>nombre conductor: {transport.nombreConductor}</Text>
+        <Text>patente: {transport.patente}</Text>
         <Text>{transport.nombreLinea}</Text>
-        <Text>{transport.patente}</Text>
       </View>
     </View>
   );
