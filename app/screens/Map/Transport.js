@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Transporte } from "../../model/Transporte";
 import RenderTransport from "../../components/Map/RenderTransport";
+import ListReclamos from '../../components/Map/ListReclamos';
 const transport = new Transporte();
 
 export default function Transport(props) {
@@ -30,14 +31,17 @@ export default function Transport(props) {
     <ScrollView style={styles.viewBody}>
       <View>
         <RenderTransport transport={Transport} />
+        <ListReclamos navigation={navigation}
+          idTransporte={Transport.idTransporte}
+        />
       </View>
     </ScrollView>
   ) : (
-    <View style={styles.loader}>
-      <ActivityIndicator size="large" color="#EF0B0B" />
-      <Text style={{ textAlign: "center" }}>Cargando Transporte </Text>
-    </View>
-  );
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="#EF0B0B" />
+        <Text style={{ textAlign: "center" }}>Cargando Transporte </Text>
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({

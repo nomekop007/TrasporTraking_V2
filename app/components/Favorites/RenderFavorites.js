@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,20 +7,64 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
+import * as firebase from "firebase";
 import { Image, Icon } from "react-native-elements";
 import { Agencia } from "../../model/Agencia";
+import { Favoritos } from "../../model/Favorito";
+import { LineaTransporte } from "../../model/LineaTransporte";
 const agencia = new Agencia();
+const favorite = new Favoritos();
+const lineTransport = new LineaTransporte();
 
 export default function RenderFavorites(props) {
   const { lineTransports, navigation } = props;
 
+  const [refresh, setrefresh] = useState(false);
+  const [favorites, setfavorites] = useState(lineTransports);
+
+
+  const loadRefresh = () => {
+    setrefresh(true);
+    const idUser = firebase.auth().currentUser.uid;
+    const promise = favorite.mostrarTodosLosFavoritos(idUser);
+    promise.then((response) => {
+      const idlineasArray = [];
+      response.forEach((doc) => {
+        idlineasArray.push(doc.data().idLineaTransporte);
+      });
+      getDataLineTransport(idlineasArray).then((response) => {
+        const linesTransport = [];
+        response.forEach((doc) => {
+          const line = doc.data();
+          line.idFavorite = doc.id;
+          linesTransport.push(line);
+        });
+        setfavorites(linesTransport);
+        setrefresh(false);
+      });
+    });
+
+  }
+
+
+  const getDataLineTransport = (idlineasArray) => {
+    const arraylineTransport = [];
+    idlineasArray.forEach((idLine) => {
+      const result = lineTransport.buscarLineaTransporte(idLine);
+      arraylineTransport.push(result);
+    });
+    return Promise.all(arraylineTransport);
+  };
+
   return (
     <FlatList
-      data={lineTransports}
+      data={favorites}
       renderItem={(line) => (
         <LineTransportInfo line={line} navigation={navigation} />
       )}
       keyExtractor={(item, index) => index.toString()}
+      refreshing={refresh}
+      onRefresh={loadRefresh}
     />
   );
 }

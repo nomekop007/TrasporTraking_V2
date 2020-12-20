@@ -1,4 +1,6 @@
+import { IDFACEBOOK } from '@env'
+
 export const FacebookApi = {
-  application_id: "2595346113922224",
+  application_id: IDFACEBOOK,
   permissions: ["public_profile"]
 };

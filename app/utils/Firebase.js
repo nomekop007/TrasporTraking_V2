@@ -1,7 +1,8 @@
 import firebase from "firebase/app";
+import { APIKEY } from "@env"
 
 const firebaseConfig = {
-  apiKey: "",
+  apiKey: APIKEY,
   authDomain: "trasportracking.firebaseapp.com",
   databaseURL: "https://trasportracking.firebaseio.com",
   projectId: "trasportracking",
