@@ -5,7 +5,7 @@ esta es una aplicacion hecha con React-native , la cual esta integrada con la ap
 
 ### Pre-requisitos 📋
 
-- se necesita tener instalado node.js en el ordenador
+- se necesita tener instalado node.js en el ordenador , una  cuenta de firebase y tmabien una cuenta de facebook developer creada.
 
 ### Instalación 🔧
 
@@ -18,8 +18,8 @@ yarn install
 - luego se debe crear un archivo .env en la raiz del proyecto y colocar los siguientes valores dentro:
 
 #variables 
-- APIKEY=""
-- IDFACEBOOK=""
+- APIKEY="[api key firebase]"
+- IDFACEBOOK="[ID facebook developer]"
 
 
 ## Comenzando 🚀

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+
+
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Toast from "react-native-easy-toast";
@@ -12,9 +14,13 @@ export default function Map(props) {
   const { navigation } = props;
   const toastRef = useRef();
   const [mapView, setmapView] = useState({});
-  const [location, setlocation] = useState(null);
   const [UserLogged, setUserLogged] = useState(false);
-
+  const [location, setlocation] = useState(null);
+  const [origin, setorigin] = useState(null);
+  const [distancia, setdistancia] = useState(null);
+  const [tiempo, setTiempo] = useState(null);
+  const [mostrarLeyenda, setmostrarLeyenda] = useState(false);
+  const [idTransporte, setidTransporte] = useState(false);
   /* validar si el usuario esta logeado  no */
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -73,6 +79,12 @@ export default function Map(props) {
   return (
     <View>
       <MapView
+        onPress={() => {
+          setorigin(null);
+          setdistancia(null);
+          setTiempo(null);
+          setmostrarLeyenda(false);
+        }}
         ref={(mapView) => {
           setmapView(mapView);
         }}
@@ -95,6 +107,14 @@ export default function Map(props) {
           UserLogged={UserLogged}
           toastRef={toastRef}
           navigation={navigation}
+          location={location}
+          origin={origin}
+          idTransporte={idTransporte}
+          setdistancia={setdistancia}
+          setTiempo={setTiempo}
+          setorigin={setorigin}
+          setmostrarLeyenda={setmostrarLeyenda}
+          setidTransporte={setidTransporte}
         />
       </MapView>
       <Icon
@@ -105,6 +125,14 @@ export default function Map(props) {
         onPress={() => findLocation(location)}
         containerStyle={styles.btnContainer}
       />
+      {
+        mostrarLeyenda ? (<View style={styles.leyenda}>
+          <View>
+            <Text style={styles.text}> Distancia: {distancia} metros </Text>
+            <Text style={styles.text}> Tiempo: {tiempo} min aprox </Text>
+          </View>
+        </View>) : (<View></View>)
+      }
 
       <Toast ref={toastRef} position="center" opacity={0.5} />
     </View>
@@ -121,6 +149,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.5,
   },
+  leyenda: {
+    position: "absolute",
+    backgroundColor: "#3FAE08",
+    margin: 10,
+    borderRadius: 3,
+    flexDirection: "row",
+  },
+
   container: {
     position: "absolute",
     backgroundColor: "#fff",
